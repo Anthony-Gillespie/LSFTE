@@ -8,6 +8,11 @@
     "default_icon": "logo.png"
   },
   "permissions": [
-    "storage"
+    "storage",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://*/*"
   ]
 }

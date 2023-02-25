@@ -67,6 +67,7 @@ export const ToggleListItem = ({
           {editing ? (
             <TextField
               autoFocus
+              defaultValue={featureToggle.name}
               variant="standard"
               onBlur={onBlurName}
               onKeyUp={onKeyUp}

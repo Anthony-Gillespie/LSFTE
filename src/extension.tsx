@@ -4,28 +4,11 @@ import { ToggleList } from "./components/toggle-list";
 import { FeatureToggle } from "./types";
 import SaveAsIcon from "@mui/icons-material/SaveAs";
 import AddIcon from "@mui/icons-material/Add";
-
-const saveFeatureToggles = async (featureToggles: Array<FeatureToggle>) => {
-  try {
-    await chrome.storage.local.set({ featureToggles });
-  } catch (e) {
-    console.error(e);
-  }
-};
-
-const loadFeatureToggles = async (): Promise<Array<FeatureToggle>> => {
-  try {
-    const { featureToggles } = await chrome.storage.local.get([
-      "featureToggles",
-    ]);
-    if (Array.isArray(featureToggles)) return featureToggles;
-    saveFeatureToggles([]);
-    return [];
-  } catch (e) {
-    console.error(e);
-    return [];
-  }
-};
+import {
+  saveFeatureToggles,
+  writeFeatureToggles,
+  loadFeatureToggles,
+} from "./helper";
 
 export const Extension = () => {
   const [featureToggles, setFeatureToggles] =
@@ -43,6 +26,7 @@ export const Extension = () => {
   const onUpdateToggles = (updatedToggles: Array<FeatureToggle>) => {
     setFeatureToggles(updatedToggles);
     saveFeatureToggles(updatedToggles);
+    writeFeatureToggles(updatedToggles);
   };
 
   const onUpdateToggle = (index: number, updatedToggle: FeatureToggle) => {
@@ -64,6 +48,11 @@ export const Extension = () => {
     onUpdateToggles([...featureToggles, { name: "", state: false }]);
   };
 
+  const onForceWrite = () => {
+    if (featureToggles === null) return;
+    writeFeatureToggles(featureToggles);
+  };
+
   return (
     <Box
       width="350px"
@@ -82,7 +71,12 @@ export const Extension = () => {
       )}
       <Divider variant="middle" />
       <Box display="flex" flexDirection="row" justifyContent="space-between">
-        <Button color="warning" variant="outlined" startIcon={<SaveAsIcon />}>
+        <Button
+          color="warning"
+          variant="outlined"
+          startIcon={<SaveAsIcon />}
+          onClick={onForceWrite}
+        >
           Write
         </Button>
         <Button
