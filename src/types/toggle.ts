@@ -1,7 +1,4 @@
-import { Providers } from "./";
-
 export type FeatureToggle = {
-  uiName?: string;
-  type: Providers;
+  name: string;
   state: boolean;
 };

@@ -1,17 +1,54 @@
-import { Typography, Box, Paper, IconButton, Switch } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Paper,
+  IconButton,
+  Switch,
+  TextField,
+} from "@mui/material";
 import { FeatureToggle } from "../../types";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import { useState } from "react";
 
 export type ToggleListItemProps = {
   featureToggle: FeatureToggle;
-  onToggle: () => void;
+  onUpdate: (updatedToggle: FeatureToggle) => void;
+  onDelete: () => void;
 };
 
 export const ToggleListItem = ({
   featureToggle,
-  onToggle,
+  onUpdate,
+  onDelete,
 }: ToggleListItemProps) => {
+  const [editing, setEditing] = useState<boolean>(false);
+
+  const onToggle = () => {
+    onUpdate({
+      ...featureToggle,
+      state: !featureToggle.state,
+    });
+  };
+
+  const saveName = (name: string) => {
+    setEditing(false);
+    onUpdate({
+      ...featureToggle,
+      name,
+    });
+  };
+
+  const onBlurName = (
+    e: React.FocusEvent<HTMLTextAreaElement | HTMLInputElement, Element>
+  ) => {
+    saveName(e.currentTarget.value);
+  };
+
+  const onKeyUp = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Enter") saveName((e.target as HTMLInputElement).value);
+  };
+
   return (
     <Paper elevation={1}>
       <Box
@@ -27,7 +64,18 @@ export const ToggleListItem = ({
           justifyContent="space-between"
           alignItems="center"
         >
-          <Typography>{featureToggle.uiName}</Typography>
+          {editing ? (
+            <TextField
+              autoFocus
+              variant="standard"
+              onBlur={onBlurName}
+              onKeyUp={onKeyUp}
+            />
+          ) : (
+            <Typography color={featureToggle.name ? undefined : "GrayText"}>
+              {featureToggle.name ? featureToggle.name : <i>Un-Named</i>}
+            </Typography>
+          )}
           <Switch
             checked={featureToggle.state}
             onChange={onToggle}
@@ -35,11 +83,11 @@ export const ToggleListItem = ({
           />
         </Box>
         <Box gridColumn={3}>
-          <IconButton size="small" color="error">
-            <DeleteIcon fontSize="inherit" />
-          </IconButton>
-          <IconButton size="small">
+          <IconButton size="small" onClick={() => setEditing(true)}>
             <EditIcon fontSize="inherit" />
+          </IconButton>
+          <IconButton size="small" color="error" onClick={onDelete}>
+            <DeleteIcon fontSize="inherit" />
           </IconButton>
         </Box>
       </Box>

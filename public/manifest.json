@@ -4,7 +4,10 @@
   "description": "Local Storage Feature Toggle Extension",
   "version": "1.0",
   "action": {
-    "default_popup": "build/index.html",
-    "default_icon": "build/logo.png"
-  }
+    "default_popup": "index.html",
+    "default_icon": "logo.png"
+  },
+  "permissions": [
+    "storage"
+  ]
 }
