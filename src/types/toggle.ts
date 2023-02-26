@@ -1,4 +1,4 @@
 export type FeatureToggle = {
   name: string;
-  state: boolean;
+  state: boolean | null;
 };

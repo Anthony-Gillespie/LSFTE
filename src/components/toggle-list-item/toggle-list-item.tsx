@@ -1,15 +1,9 @@
-import {
-  Typography,
-  Box,
-  Paper,
-  IconButton,
-  Switch,
-  TextField,
-} from "@mui/material";
+import { Typography, Box, Paper, IconButton, TextField } from "@mui/material";
 import { FeatureToggle } from "../../types";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useState } from "react";
+import { TriSwitch } from "../tri-switch";
 
 export type ToggleListItemProps = {
   featureToggle: FeatureToggle;
@@ -24,10 +18,10 @@ export const ToggleListItem = ({
 }: ToggleListItemProps) => {
   const [editing, setEditing] = useState<boolean>(false);
 
-  const onToggle = () => {
+  const onToggle = (newState: boolean | null) => {
     onUpdate({
       ...featureToggle,
-      state: !featureToggle.state,
+      state: newState,
     });
   };
 
@@ -77,11 +71,7 @@ export const ToggleListItem = ({
               {featureToggle.name ? featureToggle.name : <i>Un-Named</i>}
             </Typography>
           )}
-          <Switch
-            checked={featureToggle.state}
-            onChange={onToggle}
-            size="small"
-          />
+          <TriSwitch value={featureToggle.state} onChange={onToggle} />
         </Box>
         <Box gridColumn={3}>
           <IconButton size="small" onClick={() => setEditing(true)}>

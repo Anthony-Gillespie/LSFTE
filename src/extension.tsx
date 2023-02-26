@@ -45,7 +45,7 @@ export const Extension = () => {
 
   const onAddToggle = () => {
     if (featureToggles === null) return;
-    onUpdateToggles([...featureToggles, { name: "", state: false }]);
+    onUpdateToggles([...featureToggles, { name: "", state: null }]);
   };
 
   const onForceWrite = () => {
@@ -55,7 +55,7 @@ export const Extension = () => {
 
   return (
     <Box
-      width="350px"
+      width="450px"
       maxHeight="600px"
       display="grid"
       gridTemplateRows="minmax(0, 1fr) auto auto"
