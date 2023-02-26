@@ -16,7 +16,8 @@ export const writeFeatureToggles = async (
   try {
     const flatFeatureToggles = JSON.stringify(
       featureToggles.reduce<Record<string, boolean>>((acc, featureToggle) => {
-        if (featureToggle.state === null) return { ...acc };
+        if (featureToggle.state === null || !featureToggle.name)
+          return { ...acc };
         return { ...acc, [featureToggle.name]: featureToggle.state };
       }, {})
     );

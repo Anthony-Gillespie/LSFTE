@@ -5,10 +5,12 @@ import {
   IconButton,
   TextField,
   Tooltip,
+  Button,
 } from "@mui/material";
 import { FeatureToggle } from "../../types";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 import { TriSwitch } from "../tri-switch";
 
@@ -24,6 +26,7 @@ export const ToggleListItem = ({
   onDelete,
 }: ToggleListItemProps) => {
   const [editing, setEditing] = useState<boolean>(false);
+  const [deleteMode, setDeleteMode] = useState<boolean>(false);
 
   const onToggle = (newState: boolean | null) => {
     onUpdate({
@@ -50,6 +53,39 @@ export const ToggleListItem = ({
     if (e.key === "Enter") saveName((e.target as HTMLInputElement).value);
   };
 
+  if (deleteMode)
+    return (
+      <Paper elevation={1}>
+        <Box
+          padding={1}
+          display="grid"
+          gridTemplateColumns="minmax(0, 1fr) auto auto"
+          gap={1}
+          alignItems="center"
+          height="52px"
+        >
+          <Typography> Are you sure? </Typography>
+          <Button
+            color="error"
+            variant="contained"
+            startIcon={<DeleteIcon />}
+            onClick={() => {
+              setDeleteMode(false);
+              onDelete();
+            }}
+          >
+            Delete
+          </Button>
+          <Button
+            onClick={() => setDeleteMode(false)}
+            startIcon={<CloseIcon />}
+          >
+            Cancel
+          </Button>
+        </Box>
+      </Paper>
+    );
+
   return (
     <Paper elevation={1}>
       <Box
@@ -58,6 +94,7 @@ export const ToggleListItem = ({
         gridTemplateColumns="minmax(0, 1fr) auto"
         gap={1}
         alignItems="center"
+        height="52px"
       >
         <Box
           width="100%"
@@ -93,7 +130,11 @@ export const ToggleListItem = ({
           )}
         </Box>
         <Box gridColumn={2}>
-          <TriSwitch value={featureToggle.state} onChange={onToggle} />
+          <TriSwitch
+            value={featureToggle.state}
+            onChange={onToggle}
+            disabled={!Boolean(featureToggle.name)}
+          />
         </Box>
         <Box gridColumn={3}>
           <Tooltip title="Edit the toggle name">
@@ -102,7 +143,11 @@ export const ToggleListItem = ({
             </IconButton>
           </Tooltip>
           <Tooltip title="Delete the toggle">
-            <IconButton size="small" color="error" onClick={onDelete}>
+            <IconButton
+              size="small"
+              color="error"
+              onClick={() => setDeleteMode(true)}
+            >
               <DeleteIcon fontSize="inherit" />
             </IconButton>
           </Tooltip>
