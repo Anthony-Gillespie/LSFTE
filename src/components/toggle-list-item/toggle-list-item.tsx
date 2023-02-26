@@ -1,4 +1,11 @@
-import { Typography, Box, Paper, IconButton, TextField } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Paper,
+  IconButton,
+  TextField,
+  Tooltip,
+} from "@mui/material";
 import { FeatureToggle } from "../../types";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -48,12 +55,13 @@ export const ToggleListItem = ({
       <Box
         padding={1}
         display="grid"
-        gridTemplateColumns="auto 1fr auto"
+        gridTemplateColumns="minmax(0, 1fr) auto"
         gap={1}
         alignItems="center"
       >
         <Box
-          gridColumn={2}
+          width="100%"
+          gridColumn={1}
           display="flex"
           justifyContent="space-between"
           alignItems="center"
@@ -65,21 +73,39 @@ export const ToggleListItem = ({
               variant="standard"
               onBlur={onBlurName}
               onKeyUp={onKeyUp}
+              fullWidth
             />
           ) : (
-            <Typography color={featureToggle.name ? undefined : "GrayText"}>
-              {featureToggle.name ? featureToggle.name : <i>Un-Named</i>}
-            </Typography>
+            <Tooltip
+              title={
+                featureToggle.name
+                  ? featureToggle.name
+                  : "Click the edit button to name the toggle"
+              }
+            >
+              <Typography
+                color={featureToggle.name ? undefined : "GrayText"}
+                noWrap={true}
+              >
+                {featureToggle.name ? featureToggle.name : <i>Un-Named</i>}
+              </Typography>
+            </Tooltip>
           )}
+        </Box>
+        <Box gridColumn={2}>
           <TriSwitch value={featureToggle.state} onChange={onToggle} />
         </Box>
         <Box gridColumn={3}>
-          <IconButton size="small" onClick={() => setEditing(true)}>
-            <EditIcon fontSize="inherit" />
-          </IconButton>
-          <IconButton size="small" color="error" onClick={onDelete}>
-            <DeleteIcon fontSize="inherit" />
-          </IconButton>
+          <Tooltip title="Edit the toggle name">
+            <IconButton size="small" onClick={() => setEditing(true)}>
+              <EditIcon fontSize="inherit" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Delete the toggle">
+            <IconButton size="small" color="error" onClick={onDelete}>
+              <DeleteIcon fontSize="inherit" />
+            </IconButton>
+          </Tooltip>
         </Box>
       </Box>
     </Paper>

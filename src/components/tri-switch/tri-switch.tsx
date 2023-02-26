@@ -1,4 +1,4 @@
-import { Box, useTheme, Divider, Tooltip } from "@mui/material";
+import { Box, useTheme, Tooltip } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import CodeOffIcon from "@mui/icons-material/CodeOff";
 import CheckIcon from "@mui/icons-material/Check";
