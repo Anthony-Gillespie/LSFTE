@@ -63,7 +63,7 @@ export const Extension = () => {
 
   return (
     <Box
-      width="450px"
+      width="500px"
       maxHeight="600px"
       display="grid"
       gridTemplateRows="auto auto minmax(0, 1fr) auto auto auto"
@@ -73,7 +73,7 @@ export const Extension = () => {
       <Box display="flex" flexDirection="row" justifyContent="space-between">
         <Tooltip title="Force writes the current state to the current tab">
           <Button
-            color="warning"
+            color="primary"
             variant="outlined"
             startIcon={<SaveAsIcon />}
             onClick={onForceWrite}
@@ -84,7 +84,6 @@ export const Extension = () => {
         <Tooltip title="Moves all the overrides back to their unset state">
           <Button
             color="warning"
-            variant="outlined"
             startIcon={<CodeOffIcon />}
             onClick={onUnsetAll}
           >

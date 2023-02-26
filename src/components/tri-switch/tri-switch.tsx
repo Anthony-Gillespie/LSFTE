@@ -32,9 +32,11 @@ export const TriSwitch = ({ value, onChange, disabled }: TriSwitchProps) => {
           sx={{ ":hover": { cursor } }}
           bgcolor={sFalse ? theme.palette.error.main : undefined}
           onClick={() => !disabled && onChange(false)}
-          width="32px"
-          height="20px"
-          textAlign="center"
+          width="40px"
+          height="28px"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
           borderRadius="5px 0px 0px 5px"
         >
           <CloseIcon fontSize="small" color={color} />
@@ -46,9 +48,11 @@ export const TriSwitch = ({ value, onChange, disabled }: TriSwitchProps) => {
           sx={{ ":hover": { cursor } }}
           bgcolor={sNull ? theme.palette.grey[800] : undefined}
           onClick={() => !disabled && onChange(null)}
-          width="32px"
-          height="20px"
-          textAlign="center"
+          width="40px"
+          height="28px"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
         >
           <CodeOffIcon fontSize="small" color={color} />
         </Box>
@@ -59,9 +63,11 @@ export const TriSwitch = ({ value, onChange, disabled }: TriSwitchProps) => {
           sx={{ ":hover": { cursor } }}
           bgcolor={sTrue ? theme.palette.primary.main : undefined}
           onClick={() => !disabled && onChange(true)}
-          width="32px"
-          height="20px"
-          textAlign="center"
+          width="40px"
+          height="28px"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
           borderRadius="0px 5px 5px 0px"
         >
           <CheckIcon fontSize="small" color={color} />
